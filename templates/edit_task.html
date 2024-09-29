@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирай задача</title>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('edit_task', task_id=task.id) }}">
+        <label for="description">Описание:</label>
+        <input type="text" name="description" value="{{ task.description }}" required>
+
+        <select name="priority">
+            <option value="нисък">Нисък</option>
+            <option value="среден">Среден</option>
+            <option value="висок">Висок</option>
+        </select><br>
+
+        <label for='due_date'>Срок:</label>
+        <input type="date" name="due_date" required>
+
+        <button type="submit">Запази</button>
+    </form>
+
+
+</body>
+</html>
