@@ -6,7 +6,7 @@
 </head>
 <body>
     <form method="POST" action="{{ url_for('edit_task', task_id=task.id) }}">
-        <label for="description">Описание:</label>
+        <label>Описание:</label>
         <input type="text" name="description" value="{{ task.description }}" required>
 
         <select name="priority">
@@ -15,7 +15,7 @@
             <option value="висок">Висок</option>
         </select><br>
 
-        <label for='due_date'>Срок:</label>
+        <label>Срок:</label>
         <input type="date" name="due_date" required>
 
         <button type="submit">Запази</button>

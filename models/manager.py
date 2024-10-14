@@ -45,8 +45,8 @@ class TaskManager:
         task = Task(description, priority,status=False, due_date=due_date)
         self.tasks.append(task)
 
-    def import_task(self, description, priority, status, due_date):
-        task = Task(description, priority, status, due_date)
+    def import_task(self, description, priority, status, due_date, notified):
+        task = Task(description, priority, status, due_date, notified)
         self.tasks.append(task)
 
     def sort_tasks_priority(self):
