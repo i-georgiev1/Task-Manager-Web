@@ -1,0 +1,117 @@
+.task {
+    padding: 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.task .buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    text-decoration: none;
+    background-color: #007BFF;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.input {
+    width: 100%;  /* Make it full width */
+    padding: 10px;  /* Add padding for better usability */
+    margin: 10px 0;  /* Add margin between elements */
+    border: 1px solid #ccc;  /* Border color */
+    border-radius: 5px;  /* Rounded corners */
+    box-sizing: border-box;  /* Ensures padding is included in the total width */
+    font-size: 16px;  /* Font size */
+    background-color: #f9f9f9;  /* Light background */
+    transition: border-color 0.3s ease-in-out; /* Smooth transition on focus */
+}
+
+.input:focus {
+    border-color: #4CAF50;  /* Green border on focus */
+    outline: none;  /* Remove the default outline */
+}
+
+/* Style for the form row containing select and date picker */
+.form-row {
+    display: flex;  /* Use flexbox */
+    justify-content: space-between;  /* Space between elements */
+    gap: 10px;  /* Space between elements */
+}
+
+/* Style for the select dropdown */
+.priority_select {
+    width: 48%;  /* 48% width to leave space for the date picker */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Style for the date picker */
+input[type="datetime-local"] {
+    width: 48%;  /* 48% width to align next to select */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Optional: Input field styling */
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+

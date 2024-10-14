@@ -17,7 +17,7 @@ filepath = 'data/tasks.csv'
 if not os.path.isfile(filepath):
     with open(filepath, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['description', 'priority', 'status', 'due_date'])
+        writer.writerow(['description', 'priority', 'status', 'due_date', 'notified'])
 else:
     with open(filepath, newline='', encoding='utf-8') as f:
         reader = csv.reader(f)
@@ -27,7 +27,8 @@ else:
         priority = task[1]
         status = task[2]
         due_date = task[3]
-        manager.import_task(description, priority, status, due_date)
+        notified = task[4]
+        manager.import_task(description, priority, status, due_date, notified)
 
 
 @app.route('/save_email', methods=['GET', 'POST'])
@@ -44,6 +45,7 @@ try:
         user_email = file.read().strip()
 except FileNotFoundError:
     user_email = ""
+
 smtp_object = smtplib.SMTP('smtp.gmail.com', 587)
 smtp_object.ehlo()
 smtp_object.starttls()
@@ -54,7 +56,9 @@ smtp_object.login(email, email_password)
 for task in manager.tasks:
     curr_date = str(dt.today())
     task_date = task.due_date
-    if task_date < curr_date and not task.status:
+    if task_date < curr_date and task.status == "False" and task.notified == 'no':
+        task.notified = 'yes'
+
         task_id = str(manager.tasks.index(task) + 1)
         subject = "Просрочена задача"
         message = f"Имате просрочена задача {task_id}: {task.description}"
@@ -67,7 +71,6 @@ for task in manager.tasks:
         smtp_object.sendmail(email, user_email, msg.as_string())
 
 smtp_object.quit()
-
 
 
 @app.route('/')
@@ -144,12 +147,12 @@ def sort_tasks():
 def save_tasks():
     with open(filepath, 'w', newline='', encoding='utf-8') as csv_file:
         writer = csv.writer(csv_file)
-        writer.writerow(['description', 'priority', 'status', 'due_date'])
+        writer.writerow(['description', 'priority', 'status', 'due_date', 'notified'])
 
         for task in manager.tasks:
-            writer.writerow([task.description, task.priority, task.status, task.due_date])
+            writer.writerow([task.description, task.priority, task.status, task.due_date, task.notified])
     return redirect(url_for('show_tasks'))
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

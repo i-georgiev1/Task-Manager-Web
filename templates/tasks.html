@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/tasks.css') }}">
     <title>Всички задачи</title>
+
 </head>
 <body>
     <h2>Имейл</h2>
@@ -13,19 +15,31 @@
     </form>
 
 
-    <h2>Добави нова задача</h2>
-    <form method="POST" action="{{ url_for('add_task') }}">
-        <input type="text" name="description" placeholder="Описание на задачата" required><br>
-        <select name="priority">
-            <option value="нисък">Нисък</option>
-            <option value="среден">Среден</option>
-            <option value="висок">Висок</option>
-        </select><br>
-        <input type="datetime-local" name="due_date" required><br>
-        <button type="submit">Добави</button>
-    </form>
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close">&times;</span>
+            <h2>Добави нова задача</h2>
+            <form method="POST" action="{{ url_for('add_task') }}">
+                <input class="input" type="text" name="description" placeholder="Описание на задачата" required><br>
+                <div class="form-row">
+                    <select class="priority_select" name="priority">
+                        <option value="нисък">Нисък</option>
+                        <option value="среден">Среден</option>
+                        <option value="висок">Висок</option>
+                    </select>
+                    <input type="datetime-local" name="due_date" required>
+                </div><br>
+                <button class="button" type="submit">Добави</button>
+            </form>
+        </div>
+    </div>
 
-    <h1>Задачи</h1>
+    <div style="display: flex; gap: 10px; margin: 10px 0;">
+        <h1>Задачи</h1>
+        <button style="margin: 20px 0;" id="openModalBtn" class="button">Добави нова задача</button>
+        <a style="margin: 20px 0;" class="button" href="{{ url_for('save_tasks')}}">Запази задачите</a>
+    </div>
+
 
     <form method="GET" action="{{ url_for('sort_tasks') }}">
         <select name="sort_by" id="sort_by">
@@ -37,24 +51,55 @@
     </form>
 
     <ol>
-        {% for task in tasks %}
-        <li>
-            {{ task.description }} (Приоритет: {{ task.priority }}, Срок: {{ task.due_date }},
+    {% for task in tasks %}
+        <li class="task">
+            {{ task.description }}
+            <br>
+            Приоритет: {{ task.priority }}<br>
+            Срок: {{ task.due_date }}<br>
             Статус:
                 {% if task.status == 'True' %}
                     завършена
                 {% else %}
                     незавършена
                 {% endif %}
-                )
-            <a href="{{ url_for('complete_task', task_id=loop.index0) }}">Завършена</a> |
-            <a href="{{ url_for('edit_task', task_id=loop.index0) }}">Редактирай</a> |
-            <a href="{{ url_for('delete_task', task_id=loop.index0) }}">Изтрий</a>
+
+            <div class="buttons">
+                <a class="button" href="{{ url_for('complete_task', task_id=loop.index0) }}">Завършена</a>
+                <a class="button" href="{{ url_for('edit_task', task_id=loop.index0) }}">Редактирай</a>
+                <a class="button" href="{{ url_for('delete_task', task_id=loop.index0) }}">Изтрий</a>
+            </div>
         </li>
     {% endfor %}
     </ol>
 
-    <a href="{{ url_for('save_tasks')}}">Запази задачите</a>
+
+
+
+
+<script>
+    // Get modal, button, and close elements
+    var modal = document.getElementById("taskModal");
+    var btn = document.getElementById("openModalBtn");
+    var span = document.getElementById("closeModalBtn");
+
+    // When the button is clicked, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the close button (x) is clicked, close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal if user clicks outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 
 </body>
